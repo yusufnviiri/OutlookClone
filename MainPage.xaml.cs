@@ -14,18 +14,23 @@ namespace OutlookClone
 
         protected override async void OnAppearing()
         {
+            LoadingIndicator.IsVisible = true;
             base.OnAppearing();
             var httpClient = new HttpClient();
             var jsonResponse = await  httpClient.GetFromJsonAsync<List<Simpson>>(contentUri);
             jsonResponse.ForEach(s => Simpsons.Add(s));
+            LoadingIndicator.IsVisible = false;
+
         }
 
 
-    
 
-    public MainPage()
+
+        public MainPage()
         {
             InitializeComponent();
+            MessageCollection.ItemsSource = Simpsons;
+
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
